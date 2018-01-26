@@ -8,7 +8,7 @@
                 <p class="f20 tc p10 mT10">{{foodInfo.name}}</p>
                 <div class="mT20">
                     <span class="p10">价格: <span class="f20 fb"> {{foodInfo.price}}</span> 元</span>
-                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.sales}}</span> 份</span>
+                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.salesnpm }}</span> 份</span>
                 </div>
                 <p class="mT20 p10">
                     <span>我想购买</span>
@@ -17,7 +17,7 @@
                     <i class="fa fa-minus cursor p10" aria-hidden="true" @click="reduce"></i>
                     <span class="p10">份</span>
                 </p>
-                <el-button type="primary" class="mT20 mL10">加入购物车</el-button>
+                <el-button type="primary" class="mT20 mL10" @click="addCart">加入购物车</el-button>
             </el-col>
 
         </el-row>  
@@ -47,17 +47,19 @@ export default{
         ...mapMutations['increment','decrement'],
         add: function(){
             this.num++;
-            this.$store.commit('increment',1);
+            //this.$store.commit('increment',1);
             console.log(this.num);
 
         },
         reduce: function(){
             if(this.num>1){
                 this.num--;
-                this.$store.commit('decrement',1);
+                //this.$store.commit('decrement',1);
                 console.log(this.num);
             }
-            
+        },
+        addCart: function(){
+            this.$store.commit('increment',this.num);
 
         }
     }
