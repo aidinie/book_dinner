@@ -101,7 +101,7 @@ export default {
                 ],
                 number: [
                     { required: true, message: '请输入手机号',trigger: 'blur'},
-                    { type: 'number', message: '请输入正确的手机号', trigger: 'blur,change',validator:validateNumber }
+                    { type: 'number', message: '请输入正确的手机号', trigger: 'blur',validator:validateNumber }
                 ],
                 pass: [
                     { required: true,validator: validatePass, trigger: 'blur' }
@@ -113,7 +113,7 @@ export default {
                     { required: true, message: '请选择性别', trigger: 'change' }
                 ],
                 checkCode: [
-                    { required: true, message: '请输入验证码', trigger: 'blur,change', validator: validateCode}
+                    { required: true, message: '请输入验证码', trigger: 'blur', validator: validateCode}
                 ]
             }
         };
