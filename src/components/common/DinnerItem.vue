@@ -51,9 +51,10 @@ export default{
 .item{
     margin: 10px 10px;
     border: 1px solid black;
-    display: inline-block;
+    /* display: inline-block; */
     width: 200px;
     height: 200px;
+    float: left;
 }
 .msg{
     height: 40px;
