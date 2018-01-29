@@ -16,7 +16,7 @@
             <i class="el-icon-arrow-down el-icon--right cursor"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><span>个人中心</span></el-dropdown-item>
+            <router-link to="/personal"><el-dropdown-item><span>个人中心</span></el-dropdown-item></router-link>
             <el-dropdown-item><span @click="removeUserName">注销登陆</span></el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -45,6 +45,9 @@ export default{
 }
 
 </script>
-<style>
+<style scoped>
+a{
+    text-decoration: none;
+}
 
 </style>

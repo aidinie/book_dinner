@@ -23,7 +23,7 @@
         </el-row>  
         <el-row>
             <el-col :span="12" :offset="3">
-                <el-menu  mode="horizontal" default-active="1" class="el-menu-demo" >
+                <el-menu  mode="horizontal" :default-active="curIndex" class="el-menu-demo" >
                     <router-link :to="{path:'/detail/',query:{id:id}}"><el-menu-item index="1"> 详情</el-menu-item></router-link>
                     <router-link :to="{path:'/detail/comment',query:{id:id}}"><el-menu-item index="2"> 评论</el-menu-item></router-link>
                 </el-menu>
@@ -50,12 +50,16 @@ export default{
             },
             num : 1,
             id : '',
+            curIndex : "1",
           
         }
     },
     created(){
         this.id = this.$route.query.id;
-        console.log(this.id);
+        var path = this.$route.path;
+        if(path == '/detail/comment'){
+            this.curIndex = "2"
+        }
     },
     methods: {
         ...mapMutations['increment','decrement'],
@@ -87,6 +91,7 @@ a{
 }
 .is-active {
     color: #000000;
+    border-bottom: 3px solid #409EFF;
 }
 
 </style>

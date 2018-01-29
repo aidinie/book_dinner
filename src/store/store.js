@@ -10,8 +10,8 @@ const store = new Vuex.Store({
         userName : '聂爱迪',
         //用户Id
         userId : '',
-        //用户权限
-        permission : '0',
+        //用户权限 0:普通用户 1:商家
+        permission : '1',
         
     },
     mutations : {

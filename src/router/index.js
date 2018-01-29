@@ -7,9 +7,13 @@ import ColdDishes from '@/components/common/ColdDishes'
 import HotDishes from '@/components/common/HotDishes'
 import Describe from '@/components/common/Describe'
 import Comment from '@/components/common/Comment'
+import Address from '@/components/common/Address'
+import Order from '@/components/common/Order'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
+import Manage from '@/components/page/Manage'
+import Personal from '@/components/page/Personal'
 
 Vue.use(Router)
 
@@ -54,6 +58,22 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/manage',
+      name: 'manage',
+      component: Manage
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component: Personal,
+      children: [
+        { path:'/', component: Order },
+        { path:'order', component: Order },
+        { path:'address', component: Address },
+      ]
+
     }
 
   ]
