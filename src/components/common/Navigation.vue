@@ -25,5 +25,9 @@
 <style scoped>
 a{
   text-decoration: none;
+  color: black
+}
+.router-link-active{
+  color: #409EFF
 }
 </style>

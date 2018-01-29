@@ -8,7 +8,7 @@
                 <p class="f20 tc p10 mT10">{{foodInfo.name}}</p>
                 <div class="mT20">
                     <span class="p10">价格: <span class="f20 fb"> {{foodInfo.price}}</span> 元</span>
-                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.salesnpm }}</span> 份</span>
+                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.sales}}</span> 份</span>
                 </div>
                 <p class="mT20 p10">
                     <span>我想购买</span>
@@ -21,6 +21,19 @@
             </el-col>
 
         </el-row>  
+        <el-row>
+            <el-col :span="12" :offset="3">
+                <el-menu  mode="horizontal" default-active="1" class="el-menu-demo" >
+                    <router-link :to="{path:'/detail/',query:{id:id}}"><el-menu-item index="1"> 详情</el-menu-item></router-link>
+                    <router-link :to="{path:'/detail/comment',query:{id:id}}"><el-menu-item index="2"> 评论</el-menu-item></router-link>
+                </el-menu>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="12" :offset="3">
+                <router-view :id="id"></router-view>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -37,6 +50,7 @@ export default{
             },
             num : 1,
             id : '',
+          
         }
     },
     created(){
@@ -68,5 +82,11 @@ export default{
 </script>
 
 <style scoped>
+a{
+    text-decoration: none;
+}
+.is-active {
+    color: #000000;
+}
 
 </style>

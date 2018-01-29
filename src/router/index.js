@@ -5,6 +5,8 @@ import Index from '@/components/page/Index'
 import Detail from '@/components/page/Detail'
 import ColdDishes from '@/components/common/ColdDishes'
 import HotDishes from '@/components/common/HotDishes'
+import Describe from '@/components/common/Describe'
+import Comment from '@/components/common/Comment'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
@@ -32,7 +34,11 @@ export default new Router({
     {
       path: '/detail',
       name: 'detail',
-      component: Detail
+      component: Detail,
+      children: [
+        {path: '/',component: Describe },
+        {path: 'comment', component: Comment}
+      ]
     },
     {
       path: '/cart',
