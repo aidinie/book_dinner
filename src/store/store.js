@@ -21,18 +21,26 @@ const store = new Vuex.Store({
         decrement(state,n){
             state.count-=n;
         },
-        setUserName(state,name){
-            state.userName = name;
+        // setUserName(state,name){
+        //     state.userName = name;
 
-        },
-        removeUserName(state){
-            state.userName = '';
-        },
-        setPermission(state,permission){
+        // },
+        // removeUserName(state){
+        //     state.userName = '';
+        // },
+        // setPermission(state,permission){
+        //     state.permission = permission;
+        // },
+        // removePermission(state){
+        //     state.permission = "";
+        // }
+        setUserMessage(state,name,permission){
+            state.userName = name;
             state.permission = permission;
         },
-        removePermission(state){
-            state.permission = "";
+        removeUserMessage(state){
+            state.userName = '';
+            state.permission = '';
         }
         
     }

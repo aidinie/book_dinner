@@ -1,7 +1,9 @@
 <template>
 <div id="head" class="box p10 bgCor4 boxVc f14 pL20 pR20">
-    <img src="../../assets/logo.png" alt="" height="40px" width="40px">
-    <p class="f20 pL10">酒店订餐系统</p>
+    <router-link to="/index" class="box boxVc corB">
+        <img src="../../assets/logo.png" alt="" height="40px" width="40px">
+        <p class="f20 pL10">酒店订餐系统</p>
+    </router-link>
     <div class="flex1"></div>
     <i class="fa fa-user mR10 fa-lg" aria-hidden="true"></i>
     <p v-if='userName'> <span class="p10">{{userName}}</span>已登录</p>
@@ -17,7 +19,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
             <router-link to="/personal"><el-dropdown-item><span>个人中心</span></el-dropdown-item></router-link>
-            <el-dropdown-item><span @click="removeUserName">注销登陆</span></el-dropdown-item>
+            <el-dropdown-item><span @click="removeUserMessage">注销登陆</span></el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
     <router-link v-if='permission == 1' to='/manage'>后台管理</router-link>
@@ -35,8 +37,8 @@ export default{
     },
     computed: mapState(['count','userName','permission','userId']),
     methods: {
-        removeUserName : function(){
-            this.$store.commit('removeUserName');       
+        removeUserMessage : function(){
+            this.$store.commit('removeUserMessage');       
         },
         getUserId : function(){
             console.log(this.$store.state.userName);

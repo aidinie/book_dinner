@@ -14,6 +14,8 @@ import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
 import Manage from '@/components/page/Manage'
 import Personal from '@/components/page/Personal'
+import OrderDetail from '@/components/page/OrderDetail'
+import AddComment from '@/components/page/AddComment'
 
 Vue.use(Router)
 
@@ -73,7 +75,14 @@ export default new Router({
         { path:'order', component: Order },
         { path:'address', component: Address },
       ]
-
+    },
+    {
+      path: '/order/detail',
+      component: OrderDetail
+    },
+    {
+      path: '/comment',
+      component: AddComment
     }
 
   ]
