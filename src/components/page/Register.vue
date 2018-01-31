@@ -39,6 +39,15 @@
     </div>
 </template>
 <script>
+import {monitorApi} from '@/api/index'
+// import Axios from 'axios'; 
+// var $http = Axios.create({
+//   headers: {
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'content-Type': 'application/json'
+//   }
+// })
+// // Axios.defaults.headers.post['content-Type'] = 'application/json';   
 export default {
     data() {
         //input 验证密码输入
@@ -125,12 +134,27 @@ export default {
             this.$refs[formName].validate((valid) => {
             if (valid) {
                 //alert('submit!');
-                console.log(this.ruleForm2);
+                //console.log(this.ruleForm2);
                 //验证成功，路由跳转
                 // setTimeout(function(){
                 //     this.$router.push({path:'/index'});
 
                 // },2000);
+                // $http.post('http://localhost/book_dinner_backstage/index.php/welcome/register',{
+                //     // params:this.ruleForm2    
+                //     name: 'nie'
+                // }).then(function(resonse){
+                //     console.log(resonse);
+                //     if(resonse == 'success'){
+                //         this.$router.push({path:'/index'})
+                //     }else{
+                //         console.log('error submit!!');
+                //     }
+
+                // })
+                monitorApi.insertUser(this.ruleForm2).then(data => {
+				  console.log(data);
+			});
                 
             } else {
                 console.log('error submit!!');
