@@ -2,7 +2,7 @@
     <div class="tc mT20">
         <div>我的购物车</div>
         <el-table :data="cartData" stripe>
-            <el-table-column prop="name" label="菜品名称" header-align="center">
+            <el-table-column prop="dname" label="菜品名称" header-align="center">
             </el-table-column>
             <el-table-column prop="price" label="单价" header-align="center">
             </el-table-column>
@@ -29,48 +29,50 @@
 </template>
 
 <script>
+import {monitorApi} from '@/api/index'
 import { mapMutations } from 'vuex'
 export default{
     data(){
         return{
-            cartData:[
-                {
-                    id: 1,
-                    name: '菜品1',
-                    price: 66,
-                    num:1
-                },
-                {
-                    id: 2,
-                    name: '菜品2',
-                    price: 77,
-                    num:1
-                },
-                {
-                    id: 3,
-                    name: '菜品3',
-                    price: 99,
-                    num:3
-                },
-                {
-                    id: 4,
-                    name: '菜品4',
-                    price: 66,
-                    num:1
-                },
-                {
-                    id: 5,
-                    name: '菜品5',
-                    price: 77,
-                    num:1
-                },
-                {
-                    id: 6,
-                    name: '菜品6',
-                    price: 99,
-                    num:3
-                }
-            ]
+            cartData: [],
+            // cartData:[
+            //     {
+            //         id: 1,
+            //         name: '菜品1',
+            //         price: 66,
+            //         num:1
+            //     },
+            //     {
+            //         id: 2,
+            //         name: '菜品2',
+            //         price: 77,
+            //         num:1
+            //     },
+            //     {
+            //         id: 3,
+            //         name: '菜品3',
+            //         price: 99,
+            //         num:3
+            //     },
+            //     {
+            //         id: 4,
+            //         name: '菜品4',
+            //         price: 66,
+            //         num:1
+            //     },
+            //     {
+            //         id: 5,
+            //         name: '菜品5',
+            //         price: 77,
+            //         num:1
+            //     },
+            //     {
+            //         id: 6,
+            //         name: '菜品6',
+            //         price: 99,
+            //         num:3
+            //     }
+            // ]
         }
     },
     methods:{
@@ -110,6 +112,16 @@ export default{
             }
             return total;
         }
+    },
+    created(){
+        monitorApi.getCartDishes({uid: this.$store.state.userId}).then((data) =>{
+            if(data.flag == 'empty'){
+
+            }else{
+                this.cartData = data;
+            }
+           
+        })
     }
 
 }

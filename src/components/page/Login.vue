@@ -1,25 +1,14 @@
 <template>
     <div>
         <p class="p10 f20">登陆</p>
+    </el-alert>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <!-- <el-form-item label="姓名:" prop="name">
-                <el-input type="text" v-model="ruleForm2.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="性别:" prop="sex">
-                <el-radio-group v-model="ruleForm2.sex">
-                    <el-radio label="男"></el-radio>
-                    <el-radio label="女"></el-radio>
-                </el-radio-group>
-            </el-form-item> -->
             <el-form-item label="手机号:" prop="number">
                 <el-input type="text" v-model="ruleForm.number" auto-complete="off" placeholder="请输入注册手机号"></el-input>
             </el-form-item>
             <el-form-item label="密码:" prop="pass">
                 <el-input type="password" v-model="ruleForm.pass" auto-complete="off" placeholder="请输入密码"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="确认密码:" prop="checkPass">
-                <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-            </el-form-item> -->
             <el-form-item label="验证码:" prop="checkCode">
                 <el-col :span='8'>
                     <div class="code mR10">{{code}}</div>
@@ -31,9 +20,6 @@
                     <div @click='createCode' class="cursor mL10">看不清换一张</div>
                 </el-col>
             </el-form-item>
-            <!-- <el-form-item label="年龄" prop="age">
-                <el-input v-model.number="ruleForm2.age"></el-input>
-            </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">登陆</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -42,6 +28,8 @@
     </div>
 </template>
 <script>
+import {monitorApi} from '@/api/index'
+import { mapMutations } from 'vuex'
 export default {
     data() {
         var validatePass = (rule, value, callback) => {
@@ -97,11 +85,24 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                console.log(this.ruleForm);
-                // 验证成功跳转到首页
-                setTimeout(() => {
-                    this.$router.push({path:'/index'});
-                },2000)
+                // console.log(this.ruleForm);
+                // // 验证成功跳转到首页
+                // setTimeout(() => {
+                //     this.$router.push({path:'/index'});
+                // },2000)
+                monitorApi.login(this.ruleForm).then((data)=>{
+                    if(data.flag == 'success'){
+                        this.loginSuccess();
+                        this.$store.commit('setUserMessage',data.name,data.uid,data.permission);
+                        // this.$router.push({path:'/index'});
+                        setTimeout(() => {
+                            this.$router.push({path:'/index'});
+                        },2000)
+                    }else{
+                        this.loginError();
+                    }
+                    
+                })
             } else {
                 console.log('error submit!!');
                 return false;
@@ -124,6 +125,23 @@ export default {
             if(this.code.length != codeLength){   
                 this.createCode();      
             }       
+
+        },
+        loginSuccess() {
+            this.$message({
+            message: '登陆成功',
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },
+        loginError(){
+            this.$message({
+            message: '手机号或密码输入错误',
+            type: 'error',
+            duration: '2000',
+            center: true
+            });
 
         }      
     },

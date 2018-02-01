@@ -24,7 +24,7 @@
     </el-dropdown>
     <router-link v-if='permission == 1' to='/manage'>后台管理</router-link>
     <!-- <img src="../../assets/shopping.png" alt="" height="40px" width="40px"> -->
-    <span class="cursor mL10"><router-link to='/cart' class="td"><i class="fa fa-shopping-cart fa-lg corB" aria-hidden="true"></i> &nbsp;购物车&nbsp;{{count}} &nbsp;件</router-link></span>
+    <span class="cursor mL10" @click='checkCart'><i class="fa fa-shopping-cart fa-lg corB" aria-hidden="true"></i> &nbsp;购物车&nbsp;{{count}} &nbsp;件</span>
 </div>
 </template>
 <script>
@@ -40,10 +40,27 @@ export default{
         removeUserMessage : function(){
             this.$store.commit('removeUserMessage');       
         },
-        getUserId : function(){
-            console.log(this.$store.state.userName);
+        checkCart(){
+            var userName = this.$store.state.userName;
+            if(userName){
+                this.$router.push({path:'/cart'});
+            }else{
+                this.noLanding();
+            }
+
+        },
+        noLanding(){
+            this.$message({
+            message: '您还没有登陆，请登陆',
+            type: 'error',
+            duration: '2000',
+            center: true
+            });
         }
-    }
+        
+    },
+  
+
 }
 
 </script>

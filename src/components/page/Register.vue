@@ -75,10 +75,18 @@ export default {
         var validateNumber =(rule, value, callback) =>{
             if(value === ''){
                 callback(new Error('请输入手机号'));
-            }else if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(value))){  
-                callback(new Error('请输入正确手机号!'));   
+            }else if((/^1[3|4|5|8][0-9]\d{8}$/.test(value))){ 
+                monitorApi.checkExist({number:value}).then(function(data){
+                    console.log(data);
+                    if(data.flag == 'exist'){
+                        callback(new Error('手机号已被注册'));
+                    }else{
+                        callback();
+                    }
+
+                })     
             }else{
-                callback();
+                callback(new Error('请输入正确手机号!'));   
             }
 
         };
@@ -110,7 +118,7 @@ export default {
                 ],
                 number: [
                     { required: true, message: '请输入手机号',trigger: 'blur'},
-                    { type: 'number', message: '请输入正确的手机号', trigger: 'blur',validator:validateNumber }
+                    { type: 'number', trigger: 'blur',validator:validateNumber }
                 ],
                 pass: [
                     { required: true,validator: validatePass, trigger: 'blur' }
@@ -153,7 +161,15 @@ export default {
 
                 // })
                 monitorApi.insertUser(this.ruleForm2).then(data => {
-				  console.log(data);
+                    if(data.flag == 'success'){
+                        this.rgisterSuccess();
+                        setTimeout(()=>{
+                            this.$router.push({path:'/login'});
+                        },1000)       
+                    }else{
+                        this.rgisterError();
+                    }
+				   
 			});
                 
             } else {
@@ -182,7 +198,23 @@ export default {
             if(this.code.length != codeLength){   
                 this.createCode();      
             }       
-        }      
+        },
+        rgisterSuccess() {
+            this.$message({
+            message: '注册成功',
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },    
+        rgisterError() {
+            this.$message({
+            message: '注册失败，再试一次',
+            type: 'error',
+            duration: '2000',
+            center: true
+            });
+        },   
     },
     mounted(){
         this.createCode();
