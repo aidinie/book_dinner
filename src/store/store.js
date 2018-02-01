@@ -21,6 +21,9 @@ const store = new Vuex.Store({
         decrement(state,n){
             state.count-=n;
         },
+        setCount(state,num){
+            state.count = num;
+        },
         // setUserName(state,name){
         //     state.userName = name;
 

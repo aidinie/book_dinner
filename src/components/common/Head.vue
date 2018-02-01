@@ -28,6 +28,7 @@
 </div>
 </template>
 <script>
+import {monitorApi} from '@/api/index'
 import { mapState } from 'vuex'
 export default{
     data(){
@@ -59,6 +60,12 @@ export default{
         }
         
     },
+    created(){
+        monitorApi.getCartDishesNum({uid:this.$store.state.userId}).then((data)=>{
+            
+            this.$store.commit('setCount',parseInt(data.total));
+        })
+    }
   
 
 }
