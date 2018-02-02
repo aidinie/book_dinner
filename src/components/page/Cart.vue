@@ -114,6 +114,7 @@ export default{
         }
     },
     created(){
+        console.log(this.$store.state.userId);
         monitorApi.getCartDishes({uid: this.$store.state.userId}).then((data) =>{
             if(data.flag == 'empty'){
 

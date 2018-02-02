@@ -29,7 +29,7 @@
 </template>
 <script>
 import {monitorApi} from '@/api/index'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 export default {
     data() {
         var validatePass = (rule, value, callback) => {
@@ -82,21 +82,31 @@ export default {
 
     },
     methods: {
+        // submitForm1(){
+        //     console.log(this.userId);
+        //     this.$store.commit('setUserMessage',{name:11,uid:22,permission:33});
+        //     console.log(this.userId);
+        //     debugger
+        // },
         submitForm(formName) {
+            let that = this;
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                // console.log(this.ruleForm);
-                // // 验证成功跳转到首页
-                // setTimeout(() => {
-                //     this.$router.push({path:'/index'});
-                // },2000)
                 monitorApi.login(this.ruleForm).then((data)=>{
                     if(data.flag == 'success'){
+                        // debugger
                         this.loginSuccess();
-                        this.$store.commit('setUserMessage',data.name,data.uid,data.permission);
+                        this.$store.commit('setUserMessage',{
+                            name:data.name,
+                            uid:data.uid,
+                            permission:data.permission});
+                        //data.userId = this.userId;
+                        console.log(this.$store.state.userId);
                         // this.$router.push({path:'/index'});
                         setTimeout(() => {
                             this.$router.push({path:'/index'});
+                            this.$root.dc.$emit('user-info-changed', data);
+                            console.log(this.$store.state.userId);
                         },2000)
                     }else{
                         this.loginError();
@@ -147,6 +157,9 @@ export default {
     },
     mounted(){
         this.createCode();
+    },
+    computed: {
+        ...mapState(['count','userName','permission','userId'])
     }
    
 }

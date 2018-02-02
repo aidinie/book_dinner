@@ -7,9 +7,9 @@ const store = new Vuex.Store({
         //购物车商品数量
         count : 0,
         //用户名
-        userName : '聂',
+        userName : '',
         //用户Id
-        userId : '38',
+        userId : '2',
         //用户权限 0:普通用户 1:商家
         permission : '',
         
@@ -37,15 +37,17 @@ const store = new Vuex.Store({
         // removePermission(state){
         //     state.permission = "";
         // }
-        setUserMessage(state,name,id,permission){
-            state.userName = name;
-            state.permission = permission;
-            state.userId = id;
+        setUserMessage(state,obj){
+            // debugger
+            state.userName = obj.name;
+            state.permission = obj.permission;
+            state.userId = obj.uid;
         },
         removeUserMessage(state){
             state.userName = '';
             state.permission = '';
             state.userId = '';
+            state.count = 0;
         }
         
     }

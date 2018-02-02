@@ -36,7 +36,9 @@ export default{
 
         }
     },
-    computed: mapState(['count','userName','permission','userId']),
+    computed: {
+        ...mapState(['count','userName','permission','userId'])
+    },
     methods: {
         removeUserMessage : function(){
             this.$store.commit('removeUserMessage');       
@@ -61,12 +63,35 @@ export default{
         
     },
     created(){
-        monitorApi.getCartDishesNum({uid:this.$store.state.userId}).then((data)=>{
-            
-            this.$store.commit('setCount',parseInt(data.total));
+        this.$root.dc.$on('user-info-changed', (data)=>{
+            // debugger;
+            var userId = this.userId;
+           if(userId){
+                monitorApi.getCartDishesNum({uid:userId}).then((data)=>{
+                  this.$store.commit('setCount',parseInt(data.total));
+                })
+            }
         })
+    },  
+    watch:{
+        
+
+    },
+    updated(){
+        // console.log(111);
+        // var userId = this.$store.state.userId;
+        // console.log(userId);
+        // console.log(2222);
+        // if(userId){
+        //     monitorApi.getCartDishesNum({uid:userId}).then((data)=>{
+        //     this.$store.commit('setCount',parseInt(data.total));
+        // })
+        // }
+       
+    },
+    mounted(){
+        console.log('mounted');
     }
-  
 
 }
 
