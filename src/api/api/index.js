@@ -27,7 +27,7 @@ $http.interceptors.response.use(function(response) {
 });
 
 export default {
-  get(url, params, callback) {
+    get(url, params, callback) {
       return $http.get(url, params)
     },
     post(url, params, callback) {
