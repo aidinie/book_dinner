@@ -96,12 +96,14 @@ export default {
                     if(data.flag == 'success'){
                         // debugger
                         this.loginSuccess();
+                        this.setCookie('user',JSON.stringify(data),7);
                         this.$store.commit('setUserMessage',{
                             name:data.name,
                             uid:data.uid,
                             permission:data.permission});
                         //data.userId = this.userId;
                         console.log(this.$store.state.userId);
+                        console.log(data);
                         // this.$router.push({path:'/index'});
                         setTimeout(() => {
                             this.$router.push({path:'/index'});
@@ -153,7 +155,13 @@ export default {
             center: true
             });
 
-        }      
+        },    
+        setCookie: function (cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            },
     },
     mounted(){
         this.createCode();

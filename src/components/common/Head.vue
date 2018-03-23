@@ -41,7 +41,8 @@ export default{
     },
     methods: {
         removeUserMessage : function(){
-            this.$store.commit('removeUserMessage');       
+            this.$store.commit('removeUserMessage');   
+            this.clearCookie();    
         },
         checkCart(){
             var userName = this.$store.state.userName;
@@ -59,7 +60,38 @@ export default{
             duration: '2000',
             center: true
             });
-        }
+        },
+        getCookie: function (cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1);
+                    if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+                }
+                return "";
+        },
+        setUserMessageByCookie(){
+            var data = this.getCookie('user');
+            if(data){
+                data = JSON.parse(data);
+                this.$store.commit('setUserMessage',{
+                            name:data.name,
+                            uid:data.uid,
+                            permission:data.permission});
+            }
+
+        },
+        clearCookie: function () {
+                this.setCookie('user', "", -1);
+
+            },
+        setCookie: function (cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        },
         
     },
     created(){
@@ -90,7 +122,8 @@ export default{
        
     },
     mounted(){
-        console.log('mounted');
+        this.setUserMessageByCookie();
+        
     }
 
 }
