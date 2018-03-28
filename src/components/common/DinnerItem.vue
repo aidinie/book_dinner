@@ -2,7 +2,7 @@
 <div>
     <div v-for='item in dishesList' class="item">
         <!-- <span>{{item.id}}</span> -->
-        <router-link :to="{path:'/detail',query:{id:item.id}}" target='_blank'>
+        <router-link :to="{path:'/detail',query:{id:item.did}}" target='_blank'>
             <img :src='item.imgPath' alt="" height="100px" width="100px">
         </router-link>
         <p>{{item.name}}</p>

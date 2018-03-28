@@ -95,15 +95,16 @@ export default{
         
     },
     created(){
-        this.$root.dc.$on('user-info-changed', (data)=>{
+        this.setUserMessageByCookie();
+        //this.$root.dc.$on('user-info-changed', (data)=>{
             // debugger;
-            var userId = this.userId;
-           if(userId){
-                monitorApi.getCartDishesNum({uid:userId}).then((data)=>{
-                  this.$store.commit('setCount',parseInt(data.total));
-                })
-            }
-        })
+        var userId = this.userId;
+        if(userId){
+            monitorApi.getCartDishesNum({uid:userId}).then((data)=>{
+                this.$store.commit('setCount',parseInt(data.total));
+            })
+        }
+        //})
     },  
     watch:{
         
@@ -122,7 +123,7 @@ export default{
        
     },
     mounted(){
-        this.setUserMessageByCookie();
+        // this.setUserMessageByCookie();
         
     }
 

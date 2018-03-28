@@ -8,7 +8,7 @@
                 <p class="f20 tc p10 mT10">{{foodInfo.name}}</p>
                 <div class="mT20">
                     <span class="p10">价格: <span class="f20 fb"> {{foodInfo.price}}</span> 元</span>
-                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.sales}}</span> 份</span>
+                    <span class="p10 mL30">月销量: <span class="f20 fb"> {{foodInfo.sale}}</span> 份</span>
                 </div>
                 <p class="mT20 p10">
                     <span>我想购买</span>
@@ -24,8 +24,12 @@
         <el-row>
             <el-col :span="12" :offset="3">
                 <el-menu  mode="horizontal" :default-active="curIndex" class="el-menu-demo" >
-                    <router-link :to="{path:'/detail/',query:{id:id}}"><el-menu-item index="1"> 详情</el-menu-item></router-link>
-                    <router-link :to="{path:'/detail/comment',query:{id:id}}"><el-menu-item index="2"> 评论</el-menu-item></router-link>
+                    <el-col :span="12">
+                        <router-link :to="{path:'/detail/',query:{id:id}}"><el-menu-item index="1"> 详情</el-menu-item></router-link>
+                    </el-col>
+                    <el-col :span="12">
+                        <router-link :to="{path:'/detail/comment',query:{id:id}}"><el-menu-item index="2"> 评论</el-menu-item></router-link>
+                    </el-col>
                 </el-menu>
             </el-col>
         </el-row>
@@ -38,16 +42,18 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import {monitorApi} from '@/api/index'
 export default{
     data(){
         return{
-            foodInfo : {
-                name : '菜品名称',
-                price : '99',
-                describe : '这是商品描述哈哈哈',
-                sales : '60',
-            },
+            // foodInfo : {
+            //     name : '菜品名称',
+            //     price : '99',
+            //     describe : '这是商品描述哈哈哈',
+            //     sales : '60',
+            // },
+            foodInfo:'',
             num : 1,
             id : '',
             curIndex : "1",
@@ -56,10 +62,20 @@ export default{
     },
     created(){
         this.id = this.$route.query.id;
+        var self = this;
+        monitorApi.dishDetail({ id: this.id}).then(
+            function(data){
+                self.foodInfo = data;
+                console.log(self.foodInfo);
+            }
+        )
         var path = this.$route.path;
         if(path == '/detail/comment'){
             this.curIndex = "2"
         }
+    },
+    computed:{
+        ...mapState(['userId'])
     },
     methods: {
         ...mapMutations['increment','decrement'],
@@ -77,9 +93,47 @@ export default{
             }
         },
         addCart: function(){
-            this.$store.commit('increment',this.num);
+            var params = {
+                id : this.foodInfo.did,
+                name : this.foodInfo.name,
+                price : this.foodInfo.price,
+                num : this.num,
+                uid : this.userId
+            }
+            console.log(params);
+            var self = this;
+            monitorApi.insertCart(params).then(
+                function(data){
+                    console.log(data);
+                    console.log(data.flag);
+                    if(data.flag == "success"){
+                        self.$store.commit('increment',self.num);
+                        self.addCartSuccess();
+                    }else{
+                        self.addCartError();
 
-        }
+                    }
+                }
+            )
+            
+
+        },
+        addCartSuccess() {
+            this.$message({
+            message: '已加入购物车',
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },
+        addCartError() {
+            this.$message({
+            message: '加入购物车失败，请重试',
+            type: 'error',
+            duration: '1000',
+            center: true
+            });
+        },
     }
 }
 

@@ -97,6 +97,7 @@ export default{
         monitorApi.getDishes({ category: 2}).then(
             function(data){
                 self.dishesList = data;
+                console.log(data);
             }
         )
     }
