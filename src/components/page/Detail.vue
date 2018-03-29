@@ -100,12 +100,9 @@ export default{
                 num : this.num,
                 uid : this.userId
             }
-            console.log(params);
             var self = this;
             monitorApi.insertCart(params).then(
                 function(data){
-                    console.log(data);
-                    console.log(data.flag);
                     if(data.flag == "success"){
                         self.$store.commit('increment',self.num);
                         self.addCartSuccess();

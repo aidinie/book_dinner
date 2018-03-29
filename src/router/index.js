@@ -9,6 +9,7 @@ import Describe from '@/components/common/Describe'
 import Comment from '@/components/common/Comment'
 import Address from '@/components/common/Address'
 import Order from '@/components/common/Order'
+import ManageAddress from '@/components/common/manageAddress'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
@@ -16,6 +17,7 @@ import Manage from '@/components/page/Manage'
 import Personal from '@/components/page/Personal'
 import OrderDetail from '@/components/page/OrderDetail'
 import AddComment from '@/components/page/AddComment'
+
 
 Vue.use(Router)
 
@@ -74,6 +76,7 @@ export default new Router({
         { path:'/', component: Order },
         { path:'order', component: Order },
         { path:'address', component: Address },
+        { path:'manage', component: ManageAddress }
       ]
     },
     {

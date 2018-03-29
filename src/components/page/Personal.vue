@@ -7,13 +7,19 @@
                     <router-link :to="{path:'/personal/order'}">
                         <el-menu-item index="1">
                             <i class="el-icon-menu"></i>
-                            <span>我的订单</span>
+                            <span>查看我的订单</span>
                         </el-menu-item>
                     </router-link>
                     <router-link :to="{path:'/personal/address'}">
                         <el-menu-item index="2">
                             <i class="el-icon-menu"></i>
-                            <span>收货地址</span>
+                            <span>新增收货地址</span>
+                        </el-menu-item>
+                    </router-link>
+                    <router-link :to="{path:'/personal/manage'}">
+                        <el-menu-item index="3">
+                            <i class="el-icon-menu"></i>
+                            <span>管理收货地址</span>
                         </el-menu-item>
                     </router-link>
                 </el-menu>
@@ -38,6 +44,8 @@ export default{
         var path = this.$route.path;
         if(path == '/personal/address'){
             this.curIndex = "2"
+        }else if(path == '/personal/manage'){
+            this.curIndex = "3"
         }
     },
 }

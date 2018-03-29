@@ -30,7 +30,7 @@
 
 <script>
 import {monitorApi} from '@/api/index'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 export default{
     data(){
         return{
@@ -75,6 +75,9 @@ export default{
             // ]
         }
     },
+    computed:{
+        ...mapState(['userId'])
+    },
     methods:{
         ...mapMutations['increment','decrement'],
         getIndex(id){
@@ -87,23 +90,74 @@ export default{
             return index;
         },
         remove(id){
-            var index = this.getIndex(id);
-            var n = this.cartData[index].num;
-            this.cartData.splice(index,1);
-            this.$store.commit('decrement',n);
+            var self = this;
+            monitorApi.deleteCartById({id:id}).then(
+                function(data){
+                    if(data.flag == "success"){
+                        var index = self.getIndex(id);
+                        var n = self.cartData[index].num;
+                        self.cartData.splice(index,1);
+                        self.$store.commit('decrement',n);
+                        self.success('删除成功');
+                    }else{
+                        self.error('删除失败，请重试');
+
+                    }
+                }
+            )
         },
         add(id){
             var index = this.getIndex(id);
-            this.cartData[index].num ++;
-            this.$store.commit('increment',1);
+            var updatedNum = this.cartData[index].num;
+            var params = {
+                did : this.cartData[index].did,
+                num : updatedNum + 1,
+                uid : this.userId                
+            }
+            var self = this;
+            monitorApi.updateCart(params).then(
+                function(data){
+                    if(data.flag == "success"){
+                        self.cartData[index].num++;
+                        self.$store.commit('increment',1);
+                        self.success('更新成功');
+                    }else{
+                        self.error('更新失败，请重试');
+
+                    }
+                }
+            )
 
         },
         reduce(id){
             var index = this.getIndex(id);
-            if( this.cartData[index].num >1){
-                this.cartData[index].num --;
-                this.$store.commit('decrement',1);
+            // if( this.cartData[index].num >1){
+            //     this.cartData[index].num --;
+            //     this.$store.commit('decrement',1);
+            // }
+            var updatedNum = this.cartData[index].num;
+            if(updatedNum >1){
+                var params = {
+                did : this.cartData[index].did,
+                num : updatedNum-1,
+                uid : this.userId                
             }
+            var self = this;
+            monitorApi.updateCart(params).then(
+                function(data){
+                    if(data.flag == "success"){
+                        self.cartData[index].num--;
+                        self.$store.commit('decrement',1);
+                        self.success('更新成功');
+                    }else{
+                        self.error('更新失败，请重试');
+
+                    }
+                }
+            )
+
+            }
+          
         },
         totalPrice(){
             var total = 0;
@@ -111,7 +165,23 @@ export default{
                 total += this.cartData[i].num * this.cartData[i].price;
             }
             return total;
-        }
+        },
+        success(msg) {
+            this.$message({
+            message: msg,
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },
+        error(msg) {
+            this.$message({
+            message: msg,
+            type: 'error',
+            duration: '1000',
+            center: true
+            });
+        },
     },
     created(){
         console.log(this.$store.state.userId);

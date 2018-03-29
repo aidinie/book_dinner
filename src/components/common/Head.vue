@@ -101,7 +101,11 @@ export default{
         var userId = this.userId;
         if(userId){
             monitorApi.getCartDishesNum({uid:userId}).then((data)=>{
-                this.$store.commit('setCount',parseInt(data.total));
+                var total = 0;
+                if(data.total){
+                    total = data.total;
+                }
+                this.$store.commit('setCount',parseInt(total));
             })
         }
         //})
