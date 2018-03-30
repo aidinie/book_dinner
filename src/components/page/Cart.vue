@@ -23,8 +23,21 @@
             <div class="flex1"></div>
             <el-button type="primary" class="mR20"><router-link to='/index' class="td corF">继续购物</router-link></el-button>
             <div class="mR20">总价：<span>{{ totalPrice() }}</span> 元</div>
-            <el-button type="primary" class="mR20">立刻下单</el-button>
+            <el-button type="primary" class="mR20" @click="buy">立刻下单</el-button>
         </div>
+        <el-dialog title="选择收货地址" :visible.sync="dialogTableVisible">
+            <el-table :data="addressInfo">
+                <el-table-column label="选择" width="100" center header-align="center">
+                        <template slot-scope="scope">
+                            <el-radio class="radio" :label="scope.$index" v-model="selectedAddressIdx">&nbsp;</el-radio>
+                        </template>
+                </el-table-column>
+                <el-table-column property="address" label="收货地址" header-align="center"></el-table-column>
+            </el-table>
+            <div class="cor5" v-show="showMsg">请选择收货地址！</div>
+            <el-button type="primary" class="mR20 mT20"><router-link to='/personal/address' class="td corF">添加地址</router-link></el-button>
+            <el-button type="primary" class="mR20 mT20" @click='ok'>确定</el-button>
+        </el-dialog>
     </div>
 </template>
 
@@ -35,44 +48,11 @@ export default{
     data(){
         return{
             cartData: [],
-            // cartData:[
-            //     {
-            //         id: 1,
-            //         name: '菜品1',
-            //         price: 66,
-            //         num:1
-            //     },
-            //     {
-            //         id: 2,
-            //         name: '菜品2',
-            //         price: 77,
-            //         num:1
-            //     },
-            //     {
-            //         id: 3,
-            //         name: '菜品3',
-            //         price: 99,
-            //         num:3
-            //     },
-            //     {
-            //         id: 4,
-            //         name: '菜品4',
-            //         price: 66,
-            //         num:1
-            //     },
-            //     {
-            //         id: 5,
-            //         name: '菜品5',
-            //         price: 77,
-            //         num:1
-            //     },
-            //     {
-            //         id: 6,
-            //         name: '菜品6',
-            //         price: 99,
-            //         num:3
-            //     }
-            // ]
+            addressInfo:[],
+            dialogTableVisible: false,
+            selectedAddressIdx: '',
+            selectedAddress:'',
+            showMsg: false,
         }
     },
     computed:{
@@ -182,14 +162,40 @@ export default{
             center: true
             });
         },
+        buy(){
+            if(this.selectedAddress){
+                
+            }else{
+                this.dialogTableVisible = true;
+            }
+
+        },
+        ok(){
+            //this.selectedAddress = this.addressInfo[this.selectedAddressIdx].address;
+            if(typeof(this.selectedAddressIdx) =='number'){
+                this.addressInfo[this.selectedAddressIdx].address;
+                this.showMsg = false;
+                this.dialogTableVisible = false;
+            }else{
+                this.showMsg = true
+            }
+        }
     },
     created(){
-        console.log(this.$store.state.userId);
-        monitorApi.getCartDishes({uid: this.$store.state.userId}).then((data) =>{
+        monitorApi.getCartDishes({uid: this.userId}).then((data) =>{
             if(data.flag == 'empty'){
 
             }else{
                 this.cartData = data;
+            }
+           
+        }),
+        monitorApi.getAddressInfo({uid: this.userId}).then((data) =>{
+            console.log(data);
+            if(data.flag == 'empty'){
+
+            }else{
+                this.addressInfo = data;
             }
            
         })
