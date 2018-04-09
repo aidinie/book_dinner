@@ -56,7 +56,7 @@ export default{
         }
     },
     computed:{
-        ...mapState(['userId'])
+        ...mapState(['userId','userName'])
     },
     methods:{
         ...mapMutations['increment','decrement'],
@@ -163,7 +163,42 @@ export default{
             });
         },
         buy(){
+            console.log(this.selectedAddress);
             if(this.selectedAddress){
+                var myDate = new Date();
+                var year = myDate.getFullYear();
+                var month = myDate.getMonth() + 1;
+                var day = myDate.getDate();
+                var hour = myDate.getHours();
+                var minute = myDate.getMinutes();
+                var seconds = myDate.getSeconds();
+                if(month < 10){
+                    month = '0' + month;
+                }
+                if(day < 10){
+                    day = '0' + day;
+                }
+                if(hour < 10){
+                    hour = '0' + hour;
+                }
+                if(minute < 10){
+                    minute = '0' + minute;
+                }
+                if(seconds < 10){
+                    seconds = '0' + seconds;
+                }
+                var time = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + seconds;
+                var params = {};
+                params.data = this.cartData.slice(0);
+                params.phone = this.addressInfo[this.selectedAddressIdx].phone;
+                params.name = this.userName;
+                params.time = time;
+                params.total = this.totalPrice();
+                params.uid = this.userId;
+                params.address = this.selectedAddress;
+                monitorApi.placeAnOrder(params).then((data)=>{
+                    console.log(data);
+                })
                 
             }else{
                 this.dialogTableVisible = true;
@@ -171,9 +206,8 @@ export default{
 
         },
         ok(){
-            //this.selectedAddress = this.addressInfo[this.selectedAddressIdx].address;
-            if(typeof(this.selectedAddressIdx) =='number'){
-                this.addressInfo[this.selectedAddressIdx].address;
+            if(typeof(this.selectedAddressIdx) == 'number'){
+                this.selectedAddress = this.addressInfo[this.selectedAddressIdx].address;
                 this.showMsg = false;
                 this.dialogTableVisible = false;
             }else{

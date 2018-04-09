@@ -23,6 +23,7 @@ API.makeApiMethod({
     getAddressInfo: 'http://localhost/book_dinner_backstage/index.php/welcome/getAddressInfo',//查询收货信息
     updateAddressInfo: 'http://localhost/book_dinner_backstage/index.php/welcome/updateAddressInfo',//更新收货信息
     deleteAddressInfo: 'http://localhost/book_dinner_backstage/index.php/welcome/deleteAddressInfo',//更新收货信息
+    placeAnOrder: 'http://localhost/book_dinner_backstage/index.php/welcome/placeAnOrder',//下单
 
 }, allApis, 'post')
 
