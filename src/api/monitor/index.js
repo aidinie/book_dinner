@@ -24,6 +24,10 @@ API.makeApiMethod({
     updateAddressInfo: 'http://localhost/book_dinner_backstage/index.php/welcome/updateAddressInfo',//更新收货信息
     deleteAddressInfo: 'http://localhost/book_dinner_backstage/index.php/welcome/deleteAddressInfo',//更新收货信息
     placeAnOrder: 'http://localhost/book_dinner_backstage/index.php/welcome/placeAnOrder',//下单
+    getOrder: 'http://localhost/book_dinner_backstage/index.php/welcome/getOrder',//获取订单列表
+    getOrderDetail: 'http://localhost/book_dinner_backstage/index.php/welcome/getOrderDetail',//获取订单列表
+    addComment: 'http://localhost/book_dinner_backstage/index.php/welcome/addComment',//添加评论
+
 
 }, allApis, 'post')
 

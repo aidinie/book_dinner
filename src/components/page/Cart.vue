@@ -163,7 +163,6 @@ export default{
             });
         },
         buy(){
-            console.log(this.selectedAddress);
             if(this.selectedAddress){
                 var myDate = new Date();
                 var year = myDate.getFullYear();
@@ -197,7 +196,11 @@ export default{
                 params.uid = this.userId;
                 params.address = this.selectedAddress;
                 monitorApi.placeAnOrder(params).then((data)=>{
-                    console.log(data);
+                    if(data.flag == 'success'){
+                        this.success('下单成功，请耐心等待！');
+                    }else{
+                        this.error('下单失败，请重新下单！')
+                    }
                 })
                 
             }else{
@@ -225,7 +228,6 @@ export default{
            
         }),
         monitorApi.getAddressInfo({uid: this.userId}).then((data) =>{
-            console.log(data);
             if(data.flag == 'empty'){
 
             }else{

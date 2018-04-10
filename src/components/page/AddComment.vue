@@ -5,10 +5,10 @@
         </el-row>
         <el-row>
             <el-col :span="6" :offset="6">
-                <img :src="imgPath" alt="">
+                <img :src="foodInfo.imgPath" alt="">
             </el-col>
             <el-col :span="6">
-                <div class="f20 mT30">{{name}}</div>
+                <div class="f20 mT30">{{foodInfo.name}}</div>
             </el-col>
         </el-row>
         <el-row class="mT20">
@@ -16,7 +16,10 @@
                 配送:  
             </el-col>
             <el-col :span="8">
-                <el-rate show-text v-model="value1">
+                <el-rate 
+                show-text 
+                v-model="distribution"
+                :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                 </el-rate>
             </el-col>
         </el-row>
@@ -25,7 +28,10 @@
                 口味:  
             </el-col>
             <el-col :span="8">
-                <el-rate show-text v-model="value2">
+                <el-rate 
+                show-text
+                v-model="taste"
+                :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                 </el-rate>
             </el-col>
         </el-row>
@@ -34,7 +40,10 @@
                 包装: 
             </el-col>
             <el-col :span="8">
-                <el-rate show-text v-model="value3">
+                <el-rate 
+                show-text 
+                v-model="packing"
+                :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                 </el-rate>
             </el-col>
         </el-row>
@@ -48,24 +57,82 @@
             </el-col>
         </el-row>
         <div class="mT20">
-            <el-button type="primary" round>提交</el-button>
+            <el-button type="primary" round @click="ok">提交</el-button>
         </div>
     </div>
 
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
+import {monitorApi} from '@/api/index'
 export default{
     data(){
         return{
-            imgPath: '../../static/logo.png',
-            name: '菜品一',
-            value1: '',
-            value2: '',
-            value3: '',
+            foodInfo:[],
+            distribution: null,  //配送
+            taste: null,   //口味
+            packing: null,  //包装
             comment: '',
         }
-    }
+    },
+    methods:{
+        ok(){
+            if(this.distribution && this.taste && this.packing){
+                var params = {
+                    uid : this.userId,
+                    name : this.userName,
+                    did : this.foodInfo.did,
+                    comment : this.comment || '该用户很懒，默认好评！',
+                    distribution : this.distribution,
+                    packing : this.packing,
+                    taste : this.taste
+                };
+                console.log(params);
+                monitorApi.addComment(params).then(
+                    function(data){
+                        if(data.flag == 'success'){
+                            this.success('评论成功！');
+                        }else{
+                            this.error('评论失败，请重试！');
+                        }
+                    }
+                )
+               
+            }else{
+                this.error('请为菜品评分');
+            }
+        },
+        success(msg) {
+            this.$message({
+            message: msg,
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },
+        error(msg) {
+            this.$message({
+            message: msg,
+            type: 'error',
+            duration: '1000',
+            center: true
+            });
+        },
+    },
+    created(){
+        this.id = this.$route.query.id;
+        var self = this;
+        monitorApi.dishDetail({ id: this.id}).then(
+            function(data){
+                self.foodInfo = data;
+                console.log(self.foodInfo);
+            }
+        )
+    },
+    computed:{
+        ...mapState(['userId','userName'])
+    },
 }
 </script>
 
