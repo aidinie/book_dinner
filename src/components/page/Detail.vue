@@ -19,10 +19,9 @@
                 </p>
                 <el-button type="primary" class="mT20 mL10" @click="addCart">加入购物车</el-button>
             </el-col>
-
         </el-row>  
         <el-row>
-            <el-col :span="12" :offset="3">
+            <el-col :span="12" :offset="3" class="mT10">
                 <el-menu  mode="horizontal" :default-active="curIndex" class="el-menu-demo" >
                     <el-col :span="12">
                         <router-link :to="{path:'/detail/',query:{id:id}}"><el-menu-item index="1"> 详情</el-menu-item></router-link>
@@ -33,9 +32,9 @@
                 </el-menu>
             </el-col>
         </el-row>
-        <el-row>
+        <el-row class="mT10">
             <el-col :span="12" :offset="3">
-                <router-view :id="id"></router-view>
+                <router-view :id="id" :describe="foodInfo.describe"></router-view>
             </el-col>
         </el-row>
     </div>
@@ -47,17 +46,10 @@ import {monitorApi} from '@/api/index'
 export default{
     data(){
         return{
-            // foodInfo : {
-            //     name : '菜品名称',
-            //     price : '99',
-            //     describe : '这是商品描述哈哈哈',
-            //     sales : '60',
-            // },
             foodInfo:'',
             num : 1,
             id : '',
-            curIndex : "1",
-          
+            curIndex : "1",   
         }
     },
     created(){
@@ -66,7 +58,6 @@ export default{
         monitorApi.dishDetail({ id: this.id}).then(
             function(data){
                 self.foodInfo = data;
-                console.log(self.foodInfo);
             }
         )
         var path = this.$route.path;

@@ -77,7 +77,7 @@ export default{
         }
     },
     methods:{
-        ok(){
+        ok(){ 
             if(this.distribution && this.taste && this.packing){
                 var params = {
                     uid : this.userId,
@@ -88,7 +88,6 @@ export default{
                     packing : this.packing,
                     taste : this.taste
                 };
-                console.log(params);
                 monitorApi.addComment(params).then(
                     function(data){
                         if(data.flag == 'success'){

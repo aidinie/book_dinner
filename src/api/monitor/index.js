@@ -27,6 +27,12 @@ API.makeApiMethod({
     getOrder: 'http://localhost/book_dinner_backstage/index.php/welcome/getOrder',//获取订单列表
     getOrderDetail: 'http://localhost/book_dinner_backstage/index.php/welcome/getOrderDetail',//获取订单列表
     addComment: 'http://localhost/book_dinner_backstage/index.php/welcome/addComment',//添加评论
+    getComment: 'http://localhost/book_dinner_backstage/index.php/welcome/getComment',//获取评论
+    updateDish: 'http://localhost/book_dinner_backstage/index.php/welcome/updateDish',//更新菜品信息
+    deleteDish: 'http://localhost/book_dinner_backstage/index.php/welcome/deleteDish',//删除菜品信息
+    getUserList: 'http://localhost/book_dinner_backstage/index.php/welcome/getUserList',//获取用户列表
+    setPermission: 'http://localhost/book_dinner_backstage/index.php/welcome/setPermission',//设置用户权限
+    deleteUser: 'http://localhost/book_dinner_backstage/index.php/welcome/deleteUser',//删除用户
 
 
 }, allApis, 'post')

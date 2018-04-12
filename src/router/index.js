@@ -10,6 +10,9 @@ import Comment from '@/components/common/Comment'
 import Address from '@/components/common/Address'
 import Order from '@/components/common/Order'
 import ManageAddress from '@/components/common/manageAddress'
+import CheckDish from '@/components/common/checkDish'
+import AddDish from '@/components/common/addDish'
+import ManageUser from '@/components/common/manageUser'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
@@ -66,7 +69,13 @@ export default new Router({
     {
       path: '/manage',
       name: 'manage',
-      component: Manage
+      component: Manage,
+      children: [
+        { path:'/', component: CheckDish },
+        { path:'check', component: CheckDish },
+        { path:'add', component: AddDish },
+        { path:'user', component: ManageUser }
+      ]
     },
     {
       path: '/personal',

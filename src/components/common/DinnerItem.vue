@@ -21,26 +21,7 @@ export default{
     props: ["dishesList"],
     data(){
         return{
-            // dinnerItem : [
-            //     {
-            //         id : 1,
-            //         name : '宫保鸡丁',
-            //         imgPath : '../../../static/logo.png',
-            //         price : 66,
-            //     },
-            //     {
-            //         id : 2,
-            //         name : '锅包肉',
-            //         imgPath : '../../../static/logo.png',
-            //         price : 88,
-            //     },
-            //     {
-            //         id : 3,
-            //         name : '小鸡炖蘑菇',
-            //         imgPath : '../../../static/logo.png',
-            //         price : 77,
-            //     }
-            // ]
+            
         }
     }
 }
