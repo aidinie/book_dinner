@@ -12,6 +12,9 @@ import Order from '@/components/common/Order'
 import ManageAddress from '@/components/common/manageAddress'
 import CheckDish from '@/components/common/checkDish'
 import AddDish from '@/components/common/addDish'
+import Drinks from '@/components/common/Drinks'
+import Seafood from '@/components/common/Seafood'
+import StapleFood from '@/components/common/StapleFood'
 import ManageUser from '@/components/common/manageUser'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
@@ -20,7 +23,6 @@ import Manage from '@/components/page/Manage'
 import Personal from '@/components/page/Personal'
 import OrderDetail from '@/components/page/OrderDetail'
 import AddComment from '@/components/page/AddComment'
-
 
 Vue.use(Router)
 
@@ -39,7 +41,10 @@ export default new Router({
       children: [
         {path: '/',component: ColdDishes},
         {path: 'cold',component: ColdDishes},
-        {path: 'hot',component: HotDishes}
+        {path: 'hot',component: HotDishes},
+        {path: 'drinks',component: Drinks},
+        {path: 'staple',component: StapleFood},
+        {path: 'seafood',component: Seafood},
       ],
     },
     {

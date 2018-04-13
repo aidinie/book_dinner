@@ -20,7 +20,7 @@
             <el-form-item label="菜品销量" prop="sale">
                 <el-input v-model="ruleForm.sale"></el-input>
             </el-form-item>
-            <el-form-item label="活动形式" prop="describe">
+            <el-form-item label="菜品简介" prop="describe">
               <el-input type="textarea" v-model="ruleForm.describe"></el-input>
             </el-form-item>
             <el-form-item label="图片上传" prop="imgPath">
@@ -41,103 +41,124 @@
           </el-form>
         </div>
     </template>
-          <script>
-            export default {
-              data() {
-                return {
-                  ruleForm: {
-                    name: '',
-                    describe: '',
-                    category: '',
-                    price: '',
-                    sale: '',
-                    imgPath: ''
-                  },
-                  rules: {
-                    name: [
-                      { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    ],
-                    price: [
-                      { required: true, message: '请输入价格', trigger: 'blur' },
-                    ],
-                    sale: [
-                      { required: true, message: '请输入销量', trigger: 'blur' },
-                    ],
-                    category: [
-                      { required: true, message: '请选择菜品分类', trigger: 'change' }
-                    ],
-                    describe: [
-                      { required: true, message: '请填写菜品简介', trigger: 'blur' }
-                    ],
-                    imgPath: [
-                      { required: true, message: '请上传图片', trigger: 'blur' }
-                    ]
+<script>
+import {monitorApi} from '@/api/index'
+export default {
+  data() {
+    return {
+      ruleForm: {
+        name: '',
+        describe: '',
+        category: '',
+        price: '',
+        sale: '',
+        imgPath: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入菜品名称', trigger: 'blur' },
+        ],
+        price: [
+          { required: true, message: '请输入价格', trigger: 'blur' },
+        ],
+        sale: [
+          { required: true, message: '请输入销量', trigger: 'blur' },
+        ],
+        category: [
+          { required: true, message: '请选择菜品分类', trigger: 'change' }
+        ],
+        describe: [
+          { required: true, message: '请填写菜品简介', trigger: 'blur' }
+        ],
+        imgPath: [
+          { required: true, message: '请上传图片', trigger: 'blur' }
+        ]
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      var self = this;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          monitorApi.insertDish(self.ruleForm).then(
+              function(data){
+                  if(data.flag == "success"){
+                      self.addSuccess();
+                  }else{
+                      self.addSuccess();
                   }
-                };
-              },
-              methods: {
-                submitForm(formName) {
-                  this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                      alert('submit!');
-                    } else {
-                      console.log('error submit!!');
-                      return false;
-                    }
-                  });
-                },
-                resetForm(formName) {
-                  this.$refs[formName].resetFields();
-                },
-                handleAvatarSuccess(res, file) {
-                  //if (res.name != '') {
-                    this.ruleForm.imgPath = 'http://localhost/book_dinner_backstage/assets/images/uploads/'+res;
-                  //}
-                  // this.imageUrl = URL.createObjectURL(file.raw);
-                  console.log(res)
-                },
-                beforeAvatarUpload(file) {
-                    const isJPG = file.type === 'image/jpeg';
-                    const isLt2M = file.size / 1024 / 1024 < 2;
+              })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    handleAvatarSuccess(res, file) {
+      this.ruleForm.imgPath = 'http://localhost/book_dinner_backstage/assets/images/uploads/'+res;
+    },
+    beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
 
-                    if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                    }
-                    if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                    }
-                    return isJPG && isLt2M;
-                }
+        if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+    },
+    addSuccess() {
+            this.$message({
+            message: '新增菜品成功！',
+            type: 'success',
+            duration: '1000',
+            center: true
+            });
+        },
+    addError() {
+        this.$message({
+        message: '新增菜品失败，请重试',
+        type: 'error',
+        duration: '1000',
+        center: true
+        });
+    },
 
-              }
-            }
+  }
+}
 </script>
 <style scope>
-    .el-select{
-        float: left;
-    }
-    .avatar-uploader .el-upload {
+  .el-select{
+    float: left;
+  }
+  .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
+  }
+  .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
+  }
+  .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 178px;
     height: 178px;
     line-height: 178px;
     text-align: center;
-    }
-    .avatar {
+  }
+  .avatar {
     width: 178px;
     height: 178px;
     display: block;
-    }
+  }
 
 </style>

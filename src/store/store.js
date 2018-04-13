@@ -9,7 +9,7 @@ const store = new Vuex.Store({
         //用户名
         userName : '',
         //用户Id
-        userId : '2',
+        userId : '',
         //用户权限 0:普通用户 1:商家
         permission : '',
         

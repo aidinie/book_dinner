@@ -12,8 +12,7 @@ import DinnerItem from '@/components/common/DinnerItem'
 export default{
     data(){
         return{
-            dishesList:[],
-           
+            dishesList:[],           
         }
     },
     components: {
@@ -21,10 +20,9 @@ export default{
     },
     created(){
         var self = this;
-        monitorApi.getDishes({ category: 2}).then(
+        monitorApi.getDishes({ category: 1}).then(
             function(data){
-                self.dishesList = data;
-                console.log(data);
+                self.dishesList = data;;
             }
         )
     }

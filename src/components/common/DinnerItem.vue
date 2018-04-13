@@ -3,13 +3,14 @@
     <div v-for='item in dishesList' class="item">
         <!-- <span>{{item.id}}</span> -->
         <router-link :to="{path:'/detail',query:{id:item.did}}" target='_blank'>
-            <img :src='item.imgPath' alt="" height="100px" width="100px">
+            <img :src='item.imgPath' alt="" height="200px" width="200px">
         </router-link>
         <p>{{item.name}}</p>
         <div class="msg">
             <div class="price">{{item.price}}元</div>
-            <!-- <div class="shopping"><img src="../../assets/shopping.png" alt="" width="40px" height="40px"></div> -->
-            <div><el-button type="primary" class="mR10" size="small">加入购物车</el-button></div>
+            <router-link :to="{path:'/detail',query:{id:item.did}}" target='_blank'>
+                <div><el-button type="primary" class="mR10" size="small">查看详情</el-button></div>
+            </router-link>
         </div>
     </div>
 </div>
@@ -33,8 +34,8 @@ export default{
     margin: 10px 10px;
     border: 1px solid black;
     /* display: inline-block; */
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     float: left;
 }
 .msg{

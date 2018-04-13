@@ -25,6 +25,15 @@ import ColdDishes from '@/components/common/ColdDishes'
 //热菜
 import HotDishes from '@/components/common/HotDishes'
 
+//海鲜类
+import Seafood from '@/components/common/Seafood'
+
+//主食类
+import StapleFood from '@/components/common/StapleFood'
+
+//酒水类
+import Drinks from '@/components/common/Drinks'
+
 //轮播图
 import Carousel from '@/components/common/Carousel'
 
@@ -37,7 +46,11 @@ export default {
     ColdDishes,
     HotDishes,
     Carousel,
-    Navigation
+    Navigation,
+    Seafood,
+    StapleFood,
+    Drinks
+
   }
 }
 

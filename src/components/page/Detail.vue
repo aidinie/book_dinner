@@ -2,7 +2,7 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="6" :offset="3">
-                <img src="../../assets/logo.png" alt="">
+                <img :src='foodInfo.imgPath' alt="" width="240px" height="240px">
             </el-col>
             <el-col :span="6" class="tl">
                 <p class="f20 tc p10 mT10">{{foodInfo.name}}</p>
@@ -84,14 +84,16 @@ export default{
             }
         },
         addCart: function(){
-            var params = {
+            console.log(this.userId);
+            var self = this;
+            if(this.userId){
+                var params = {
                 id : this.foodInfo.did,
                 name : this.foodInfo.name,
                 price : this.foodInfo.price,
                 num : this.num,
                 uid : this.userId
             }
-            var self = this;
             monitorApi.insertCart(params).then(
                 function(data){
                     if(data.flag == "success"){
@@ -103,12 +105,18 @@ export default{
                     }
                 }
             )
+
+            }else{
+                self.pleaseLogin();
+
+            }
+            
             
 
         },
         addCartSuccess() {
             this.$message({
-            message: '已加入购物车',
+            message: '已加入购物车！',
             type: 'success',
             duration: '1000',
             center: true
@@ -116,12 +124,20 @@ export default{
         },
         addCartError() {
             this.$message({
-            message: '加入购物车失败，请重试',
+            message: '加入购物车失败，请重试！',
             type: 'error',
             duration: '1000',
             center: true
             });
         },
+        pleaseLogin(){
+            this.$message({
+            message: '您还未登陆，请先登录！',
+            type: 'error',
+            duration: '1000',
+            center: true
+            });
+        }
     }
 }
 
