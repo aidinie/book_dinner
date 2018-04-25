@@ -22,6 +22,12 @@
                             <span>管理用户</span>
                         </el-menu-item>
                     </router-link>
+                    <router-link :to="{path:'/manage/order'}">
+                        <el-menu-item index="4">
+                            <i class="el-icon-menu"></i>
+                            <span>订单管理</span>
+                        </el-menu-item>
+                    </router-link>
                 </el-menu>
             </el-col>
             <el-col :span="15">
@@ -56,6 +62,10 @@ export default{
             this.curIndex = "2"
         }else if(path == '/manage/user'){
             this.curIndex = "3"
+        }else if(path == '/manage/order'){
+            this.curIndex = "4"
+        }else if(path == '/manage/detail'){
+            this.curIndex = "4"
         }
     }
 }

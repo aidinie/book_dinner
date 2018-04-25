@@ -9,13 +9,15 @@ import Describe from '@/components/common/Describe'
 import Comment from '@/components/common/Comment'
 import Address from '@/components/common/Address'
 import Order from '@/components/common/Order'
-import ManageAddress from '@/components/common/manageAddress'
-import CheckDish from '@/components/common/checkDish'
-import AddDish from '@/components/common/addDish'
+import ManageAddress from '@/components/common/ManageAddress'
+import CheckDish from '@/components/common/CheckDish'
+import AddDish from '@/components/common/AddDish'
 import Drinks from '@/components/common/Drinks'
 import Seafood from '@/components/common/Seafood'
 import StapleFood from '@/components/common/StapleFood'
-import ManageUser from '@/components/common/manageUser'
+import ManageUser from '@/components/common/ManageUser'
+import OrderHistory from '@/components/common/OrderHistory'
+import ManageOrderDetail from '@/components/common/Detail'
 import Cart from '@/components/page/Cart'
 import Register from '@/components/page/Register'
 import Login from '@/components/page/Login'
@@ -79,7 +81,9 @@ export default new Router({
         { path:'/', component: CheckDish },
         { path:'check', component: CheckDish },
         { path:'add', component: AddDish },
-        { path:'user', component: ManageUser }
+        { path:'user', component: ManageUser },
+        { path:'order', component: OrderHistory},
+        {path:'detail', component : ManageOrderDetail}
       ]
     },
     {

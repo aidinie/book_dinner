@@ -6,6 +6,12 @@
         <el-table-column prop="phone" label="收货人电话" header-align="center"></el-table-column>
         <el-table-column prop="address" label="收货地址" header-align="center"></el-table-column>
         <el-table-column prop="total" label="订单总金额" header-align="center"></el-table-column>
+        <el-table-column label="订单状态" header-align="center">
+            <template slot-scope="scope">
+                    <div v-if="scope.row.status == 1">商家已接单</div>
+                    <div v-else>待商家接单</div>
+            </template>
+        </el-table-column>
         <el-table-column label="操作" header-align="center">
             <template slot-scope="scope">
                 <router-link :to="{path: '/order/detail', query:{time:scope.row.time,total:scope.row.total,address:scope.row.address}}">

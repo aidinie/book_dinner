@@ -34,6 +34,7 @@ API.makeApiMethod({
     setPermission: 'http://localhost/book_dinner_backstage/index.php/welcome/setPermission',//设置用户权限
     deleteUser: 'http://localhost/book_dinner_backstage/index.php/welcome/deleteUser',//删除用户
     insertDish: 'http://localhost/book_dinner_backstage/index.php/welcome/insertDish',//插入菜品
+    acceptOrder: 'http://localhost/book_dinner_backstage/index.php/welcome/acceptOrder',//插入菜品
 
 
 }, allApis, 'post')
