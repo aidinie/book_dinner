@@ -85,6 +85,9 @@ export default {
               function(data){
                   if(data.flag == "success"){
                       self.addSuccess();
+                      setTimeout(() => {
+                        location.reload();
+                    }, 2000);
                   }else{
                       self.addSuccess();
                   }

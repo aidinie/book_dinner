@@ -95,6 +95,7 @@ export default{
         var self = this;
         monitorApi.getUserList().then(function(data){
             self.userList = data;
+            self.userList.shift();
         })
 
     }

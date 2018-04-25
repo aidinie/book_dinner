@@ -5,10 +5,11 @@
         </el-row>
         <el-row>
             <el-col :span="6" :offset="6">
-                <img :src="foodInfo.imgPath" alt="">
+                <img :src="foodInfo.imgPath" alt="" width="300px" height="300px">
             </el-col>
             <el-col :span="6">
                 <div class="f20 mT30">{{foodInfo.name}}</div>
+                <div class="describe">{{foodInfo.describe}}</div>
             </el-col>
         </el-row>
         <el-row class="mT20">
@@ -78,6 +79,7 @@ export default{
     },
     methods:{
         ok(){ 
+            var self = this;
             if(this.distribution && this.taste && this.packing){
                 var params = {
                     uid : this.userId,
@@ -91,9 +93,9 @@ export default{
                 monitorApi.addComment(params).then(
                     function(data){
                         if(data.flag == 'success'){
-                            this.success('评论成功！');
+                            self.success('评论成功！');
                         }else{
-                            this.error('评论失败，请重试！');
+                            self.error('评论失败，请重试！');
                         }
                     }
                 )
@@ -125,7 +127,6 @@ export default{
         monitorApi.dishDetail({ id: this.id}).then(
             function(data){
                 self.foodInfo = data;
-                console.log(self.foodInfo);
             }
         )
     },
@@ -135,6 +136,8 @@ export default{
 }
 </script>
 
-<style>
-
+<style scoped> 
+.describe{
+    text-align: left
+}
 </style>

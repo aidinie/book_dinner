@@ -33,8 +33,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'first',
+      component: Index,
+      children: [
+        {path: '/',component: ColdDishes},
+        {path: 'cold',component: ColdDishes},
+        {path: 'hot',component: HotDishes},
+        {path: 'drinks',component: Drinks},
+        {path: 'staple',component: StapleFood},
+        {path: 'seafood',component: Seafood},
+      ]
     },
     {
       path: '/index',

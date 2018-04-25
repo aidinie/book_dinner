@@ -198,6 +198,9 @@ export default{
                 monitorApi.placeAnOrder(params).then((data)=>{
                     if(data.flag == 'success'){
                         this.success('下单成功，请耐心等待！');
+                        setTimeout(() => {
+                        location.reload();
+                    }, 2000);
                     }else{
                         this.error('下单失败，请重新下单！')
                     }

@@ -108,7 +108,6 @@ export default {
                         setTimeout(() => {
                             this.$router.push({path:'/index'});
                             this.$root.dc.$emit('user-info-changed', data);
-                            console.log(this.$store.state.userId);
                         },2000)
                     }else{
                         this.loginError();
