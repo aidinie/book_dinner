@@ -35,7 +35,7 @@
             this.totalPrice = this.$route.query.total;
             this.uid = this.$route.query.id;
             var self = this;
-            monitorApi.getOrderDetail({ uid : this.userId, time : this.time }).then(
+            monitorApi.getOrderDetail({ uid : this.uid, time : this.time }).then(
                 function(data){
                     if(data.flag == 'empty'){
     

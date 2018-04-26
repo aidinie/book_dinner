@@ -166,7 +166,7 @@ export default {
                         setTimeout(()=>{
                             this.$router.push({path:'/login'});
                         },1000)       
-                    }else{
+                     }else{
                         this.rgisterError();
                     }
 				   
@@ -203,7 +203,7 @@ export default {
             this.$message({
             message: '注册成功',
             type: 'success',
-            duration: '1000',
+            duration: '2000',
             center: true
             });
         },    

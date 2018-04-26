@@ -102,8 +102,6 @@ export default {
                             uid:data.uid,
                             permission:data.permission});
                         //data.userId = this.userId;
-                        console.log(this.$store.state.userId);
-                        console.log(data);
                         // this.$router.push({path:'/index'});
                         setTimeout(() => {
                             this.$router.push({path:'/index'});
@@ -142,7 +140,7 @@ export default {
             this.$message({
             message: '登陆成功',
             type: 'success',
-            duration: '1000',
+            duration: '2000',
             center: true
             });
         },
